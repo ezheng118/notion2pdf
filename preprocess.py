@@ -33,6 +33,10 @@ class Preprocessor():
             subpage = self.page_links.search(line)
 
             if subpage:
+                # notion handles links to subpages and actual 
+                # hyperlinks in the same way need to check if 
+                # the link is actually to a subpage otherwise
+                # don't follow it
                 non_page = self.hyperlinks.search(line)
 
                 if non_page:
@@ -55,9 +59,6 @@ class Preprocessor():
                     with open(subpage_loc, 'r') as subpage:
                         self.__read_page(subpage, subpage_path, dest_stream)
                 except FileNotFoundError:
-                    # notion handles links to subpages and actual hyperlinks in the same way
-                    # if the file is not found, there may be an issue or it may actually be
-                    # a hyperlink
                     print('error opening the subpage')
             else:
                 dest_stream.write(line)
@@ -71,9 +72,9 @@ class Preprocessor():
 
 if __name__ == "__main__":
     output = 'test_case/intermediate.md'
-    input_file = "test_case/Personal Projects ec668bf9a7814cc7bf4be870bcd8d7fe/Not yet started 6c519e7e7356463284ab8b8e16e2b33d/dp3t app implementation efb79115e1f94a95bd2b4af0d1b216c2.md"
+    #input_file = "test_case/Personal Projects ec668bf9a7814cc7bf4be870bcd8d7fe/Not yet started 6c519e7e7356463284ab8b8e16e2b33d/dp3t app implementation efb79115e1f94a95bd2b4af0d1b216c2.md"
     #"test_case/Personal Projects ec668bf9a7814cc7bf4be870bcd8d7fe.md"
-    #"../notion2pdf/test_case/COMP 455 705b97e1ae6c4fae84d220e802bc008d.md"
+    input_file = "../notion2pdf/test_case/COMP 455 705b97e1ae6c4fae84d220e802bc008d.md"
 
     p = Preprocessor(input_file, output)
 
